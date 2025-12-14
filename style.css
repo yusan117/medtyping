@@ -1,0 +1,170 @@
+:root {
+    --primary: #3498db;
+    --success: #27ae60;
+    --danger: #e74c3c;
+    --text: #2c3e50;
+    --bg: #f0f4f8;
+    --gray: #95a5a6;
+}
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    margin: 0;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* --- 共通コンポーネント --- */
+.screen {
+    display: none;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+.active { display: flex; }
+
+h1 { font-size: 2rem; margin: 10px 0; color: var(--primary); }
+h2 { font-size: 1.2rem; margin-bottom: 20px; color: var(--gray); font-weight: normal; }
+
+button {
+    border: none; outline: none; cursor: pointer;
+    font-weight: bold; font-size: 1rem;
+    transition: transform 0.1s;
+}
+button:active { transform: scale(0.98); }
+
+/* --- メニュー画面 --- */
+.menu-btn {
+    background: #fff; color: var(--primary);
+    width: 45%; padding: 20px; margin: 5px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    font-size: 1.1rem;
+}
+.random-btn { background: var(--text); color: #fff; width: 95%; }
+
+.learning-btn {
+    background: var(--success); color: #fff;
+    width: 95%; padding: 18px; margin-bottom: 20px;
+    border-radius: 15px; font-size: 1.2rem;
+    display: flex; justify-content: center; align-items: center;
+}
+
+/* 設定エリア */
+.settings-box {
+    background: #fff; padding: 15px; border-radius: 15px;
+    width: 95%; margin-bottom: 20px; box-sizing: border-box;
+}
+.setting-row { margin-bottom: 10px; text-align: center; }
+.setting-label { font-size: 0.9rem; color: var(--gray); margin-bottom: 5px; font-weight: bold; }
+
+.radio-group {
+    display: inline-flex; background: #f0f0f0; border-radius: 20px; padding: 3px;
+}
+.radio-label {
+    padding: 8px 15px; border-radius: 18px; cursor: pointer; font-size: 0.9rem; color: var(--gray);
+}
+input[type="radio"], input[type="checkbox"] { display: none; }
+input[type="radio"]:checked + .radio-label {
+    background: var(--primary); color: #fff;
+}
+
+/* チェックのみスイッチ */
+.toggle-container {
+    display: flex; align-items: center; justify-content: center;
+    background: #fff; padding: 10px 20px; border-radius: 20px; margin-bottom: 15px;
+}
+.toggle-switch {
+    position: relative; width: 50px; height: 26px; margin-left: 10px;
+    background: #ccc; border-radius: 26px; cursor: pointer; transition: 0.3s;
+}
+.toggle-switch::after {
+    content: ''; position: absolute; top: 2px; left: 2px;
+    width: 22px; height: 22px; background: #fff; border-radius: 50%; transition: 0.3s;
+}
+#check-mode:checked + .toggle-switch { background: var(--primary); }
+#check-mode:checked + .toggle-switch::after { transform: translateX(24px); }
+
+/* --- 学習モード画面 --- */
+.learning-list {
+    width: 100%; max-width: 600px;
+    text-align: left;
+}
+.cat-header {
+    font-size: 1.2rem; font-weight: bold; margin-top: 20px;
+    border-bottom: 2px solid #ccc; padding-bottom: 5px; color: var(--text);
+}
+.word-row {
+    display: flex; justify-content: space-between; align-items: center;
+    background: #fff; padding: 15px; margin-top: 10px;
+    border-radius: 10px; cursor: pointer;
+}
+.word-info div:first-child { font-weight: bold; font-size: 1.1rem; }
+.word-info div:last-child { color: var(--gray); font-family: monospace; }
+.lvl-badge { font-size: 0.8rem; color: #e67e22; font-weight: bold; }
+.checkbox-icon {
+    font-size: 1.5rem; color: #ccc;
+}
+.word-row.checked .checkbox-icon { color: var(--success); }
+.word-row.checked .checkbox-icon::after { content: '✔'; }
+.word-row:not(.checked) .checkbox-icon::after { content: '□'; }
+
+/* --- クイズ画面 --- */
+.quiz-header {
+    width: 100%; display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 10px;
+}
+.back-btn { background: #eceff1; color: var(--gray); padding: 8px 15px; border-radius: 20px; font-size: 0.9rem; }
+.quiz-stats { font-weight: bold; color: var(--gray); text-align: right; }
+
+/* ボタンを上部に配置 */
+.top-actions {
+    width: 100%; display: flex; justify-content: space-between; margin-bottom: 30px;
+    position: relative; z-index: 10;
+}
+.hint-btn { background: #f1c40f; color: #fff; padding: 8px 15px; border-radius: 20px; font-size: 0.9rem; }
+.giveup-btn { background: none; color: var(--gray); text-decoration: underline; font-size: 0.9rem; }
+.quiz-check-btn { font-size: 2rem; background: none; color: #ccc; cursor: pointer; }
+.quiz-check-btn.checked { color: var(--success); }
+
+.game-area {
+    flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    width: 100%; margin-top: -50px;
+}
+.question-text { font-size: 2.5rem; font-weight: bold; color: var(--primary); margin-bottom: 30px; text-align: center; }
+
+/* 解答欄 */
+.answer-box { display: flex; flex-wrap: wrap; justify-content: center; margin-bottom: 20px; }
+.char-box {
+    width: 25px; height: 35px; border-bottom: 3px solid #ccc; margin: 2px;
+    display: flex; align-items: flex-end; justify-content: center;
+    font-family: monospace; font-size: 1.5rem; font-weight: bold;
+}
+.char-box.space { border: none; width: 10px; }
+.char-box.current { border-color: var(--primary); }
+.char-box.correct { border-color: var(--success); color: var(--success); }
+.char-box.giveup { border-color: var(--danger); color: var(--danger); }
+
+.message { height: 30px; font-size: 1.5rem; font-weight: bold; margin-bottom: 20px; }
+.next-btn {
+    background: var(--primary); color: #fff; padding: 15px 40px; border-radius: 30px;
+    font-size: 1.2rem; display: none;
+}
+
+/* 隠し入力 */
+#hidden-input { position: absolute; opacity: 0; top: -1000px; }
+
+/* 結果画面 */
+.score-display { font-size: 3rem; color: var(--success); margin: 30px 0; font-weight: bold; }
+.top-menu-btn { background: var(--primary); color: #fff; padding: 15px 50px; border-radius: 30px; }
+
+/* グリッドレイアウト */
+.grid { display: flex; flex-wrap: wrap; justify-content: center; width: 100%; }
