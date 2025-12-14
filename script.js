@@ -1,13 +1,13 @@
 import { medicalData } from './data.js';
 
 // --- 状態変数 ---
-let checkedWords = {}; // LocalStorageから読み込み
+let checkedWords = {}; 
 let currentQueue = [];
 let currentIndex = 0;
 let currentWord = null;
 let userInput = "";
 let score = 0;
-let isAnswered = false; // 回答完了フラグ
+let isAnswered = false; 
 let currentCategoryName = "";
 
 const hiddenInput = document.getElementById('hidden-input');
@@ -107,17 +107,14 @@ window.startGame = function(category) {
         list = medicalData[category];
     }
 
-    // フィルタ設定の取得
     const levelVal = document.querySelector('input[name="level"]:checked').value;
     const countVal = document.querySelector('input[name="count"]:checked').value;
     const isCheckMode = document.getElementById('check-mode').checked;
 
-    // 1. 難易度フィルタ
     if (levelVal !== 'all') {
         list = list.filter(i => i.level == levelVal);
     }
 
-    // 2. チェックのみフィルタ
     if (isCheckMode) {
         list = list.filter(i => checkedWords[i.en]);
     }
@@ -127,13 +124,11 @@ window.startGame = function(category) {
         return;
     }
 
-    // 3. シャッフル
     for (let i = list.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [list[i], list[j]] = [list[j], list[i]];
     }
 
-    // 4. 出題数カット
     if (countVal !== 'all' && list.length > parseInt(countVal)) {
         list = list.slice(0, parseInt(countVal));
     }
@@ -163,14 +158,11 @@ function loadQuestion() {
     document.getElementById('question-text').innerText = currentWord.ja;
     document.getElementById('message').innerText = "";
     
-    // ボタン制御
     document.getElementById('next-btn').style.display = 'none';
     document.getElementById('hint-area').style.display = 'block';
     document.getElementById('giveup-btn').style.display = 'block';
     
-    // クイズ中のチェックボタン更新
     updateQuizCheckBtn();
-
     renderAnswerBox();
     window.focusInput();
 }
@@ -187,15 +179,14 @@ function renderAnswerBox() {
             div.className = 'char-box space';
         } else {
             div.className = 'char-box';
-            // スタイル決定
             if (idx < userInput.length) {
-                div.innerText = char; // 入力済み
+                div.innerText = char;
                 div.classList.add('correct');
             } else if (isAnswered) {
-                div.innerText = char; // 答え合わせ
+                div.innerText = char;
                 div.classList.add('giveup');
             } else if (idx === userInput.length) {
-                div.classList.add('current'); // カーソル位置
+                div.classList.add('current');
             }
         }
         container.appendChild(div);
@@ -217,9 +208,9 @@ hiddenInput.addEventListener('input', (e) => {
     if (!val) return;
     
     const char = val.slice(-1).toLowerCase();
-    hiddenInput.value = ''; // クリア
+    hiddenInput.value = ''; 
 
-    if (!/[a-z]/.test(char)) return; // アルファベット以外無視
+    if (!/[a-z]/.test(char)) return; 
 
     checkInput(char);
 });
@@ -231,7 +222,6 @@ function checkInput(char) {
         // 正解
         let nextInput = userInput + char;
         
-        // スペース飛ばし
         while (nextInput.length < currentWord.en.length && currentWord.en[nextInput.length] === ' ') {
             nextInput += ' ';
         }
@@ -239,12 +229,11 @@ function checkInput(char) {
         userInput = nextInput;
         renderAnswerBox();
 
-        // 完了判定
         if (userInput.length === currentWord.en.length) {
             finishQuestion(true);
         }
     } else {
-        // 不正解：アニメーション
+        // 不正解：Miss表示は削除し、揺れるアニメーションのみ
         const box = document.getElementById('answer-box');
         box.animate([
             { transform: 'translateX(0)' },
@@ -253,8 +242,7 @@ function checkInput(char) {
             { transform: 'translateX(0)' }
         ], { duration: 200 });
         
-        document.getElementById('message').innerText = "Miss!";
-        document.getElementById('message').style.color = 'var(--danger)';
+        // document.getElementById('message').innerText = "Miss!"; // 削除
     }
 }
 
@@ -267,18 +255,15 @@ function finishQuestion(isSuccess) {
         document.getElementById('score-val').innerText = score;
         document.getElementById('message').innerText = "Excellent!";
         document.getElementById('message').style.color = 'var(--success)';
-        
-        // 自動で次へ行かず、ボタンを表示
         document.getElementById('next-btn').style.display = 'block';
     } else {
-        // ギブアップ時
         document.getElementById('message').innerText = "";
         document.getElementById('next-btn').style.display = 'block';
     }
 
     document.getElementById('hint-area').style.display = 'none';
     document.getElementById('giveup-btn').style.display = 'none';
-    renderAnswerBox(); // 答えを表示状態にする
+    renderAnswerBox(); 
 }
 
 // --- アクション ---
@@ -313,8 +298,10 @@ function updateQuizCheckBtn() {
     const btn = document.getElementById('quiz-check-btn');
     if (checkedWords[currentWord.en]) {
         btn.classList.add('checked');
+        btn.innerText = '☑'; // チェックあり
     } else {
         btn.classList.remove('checked');
+        btn.innerText = '□'; // チェックなし
     }
 }
 
