@@ -114,7 +114,7 @@ input[type="radio"]:checked + .radio-label {
     font-size: 1.5rem; color: #ccc;
 }
 .word-row.checked .checkbox-icon { color: var(--success); }
-.word-row.checked .checkbox-icon::after { content: '✔'; }
+.word-row.checked .checkbox-icon::after { content: '☑'; }
 .word-row:not(.checked) .checkbox-icon::after { content: '□'; }
 
 /* --- クイズ画面 --- */
@@ -127,19 +127,52 @@ input[type="radio"]:checked + .radio-label {
 
 /* ボタンを上部に配置 */
 .top-actions {
-    width: 100%; display: flex; justify-content: space-between; margin-bottom: 30px;
-    position: relative; z-index: 10;
+    width: 100%; display: flex; justify-content: space-between; margin-bottom: 10px;
+    align-items: center;
 }
 .hint-btn { background: #f1c40f; color: #fff; padding: 8px 15px; border-radius: 20px; font-size: 0.9rem; }
 .giveup-btn { background: none; color: var(--gray); text-decoration: underline; font-size: 0.9rem; }
-.quiz-check-btn { font-size: 2rem; background: none; color: #ccc; cursor: pointer; }
-.quiz-check-btn.checked { color: var(--success); }
+
+/* クイズ中のチェックボタン (大きくわかりやすく) */
+.quiz-check-btn { 
+    font-size: 1.8rem; 
+    background: #fff; 
+    border: 2px solid #ccc;
+    color: #ccc; 
+    cursor: pointer; 
+    width: 50px; 
+    height: 50px;
+    border-radius: 50%;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    padding: 0;
+    line-height: 1;
+}
+.quiz-check-btn.checked { 
+    color: var(--success); 
+    border-color: var(--success);
+    background-color: #e8f8f5;
+}
 
 .game-area {
-    flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
-    width: 100%; margin-top: -50px;
+    flex: 1; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    /* 上寄せにする (キーボード対策) */
+    justify-content: flex-start; 
+    width: 100%; 
+    margin-top: 10px; 
 }
-.question-text { font-size: 2.5rem; font-weight: bold; color: var(--primary); margin-bottom: 30px; text-align: center; }
+
+.question-text { 
+    font-size: 2rem; /* 少し小さく */
+    fontWeight: bold; 
+    color: var(--primary); 
+    margin-bottom: 20px; 
+    text-align: center; 
+}
 
 /* 解答欄 */
 .answer-box { display: flex; flex-wrap: wrap; justify-content: center; margin-bottom: 20px; }
@@ -153,10 +186,13 @@ input[type="radio"]:checked + .radio-label {
 .char-box.correct { border-color: var(--success); color: var(--success); }
 .char-box.giveup { border-color: var(--danger); color: var(--danger); }
 
-.message { height: 30px; font-size: 1.5rem; font-weight: bold; margin-bottom: 20px; }
+/* メッセージエリア (高さを確保してガタつき防止) */
+.message { height: 30px; font-size: 1.5rem; font-weight: bold; margin-bottom: 10px; }
+
 .next-btn {
     background: var(--primary); color: #fff; padding: 15px 40px; border-radius: 30px;
     font-size: 1.2rem; display: none;
+    margin-bottom: 20px; /* キーボードとの余白 */
 }
 
 /* 隠し入力 */
