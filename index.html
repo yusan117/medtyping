@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MedTyping Web</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="menu-screen" class="screen active">
+        <h1>MedTyping Web</h1>
+        <h2>解剖学 英単語</h2>
+
+        <button class="learning-btn" onclick="showLearningMode()">
+            📖 学習モード (一覧・チェック)
+        </button>
+
+        <div class="toggle-container">
+            <label for="check-mode" class="check-mode-text">チェックした単語のみ出題</label>
+            <input type="checkbox" id="check-mode">
+            <label for="check-mode" class="toggle-switch"></label>
+        </div>
+
+        <div class="settings-box">
+            <div class="setting-row">
+                <div class="setting-label">難易度</div>
+                <div class="radio-group">
+                    <input type="radio" name="level" id="lv1" value="1"><label for="lv1" class="radio-label">Lv.1</label>
+                    <input type="radio" name="level" id="lv2" value="2"><label for="lv2" class="radio-label">Lv.2</label>
+                    <input type="radio" name="level" id="lv3" value="3"><label for="lv3" class="radio-label">Lv.3</label>
+                    <input type="radio" name="level" id="lv-all" value="all" checked><label for="lv-all" class="radio-label">全て</label>
+                </div>
+            </div>
+            <div class="setting-row">
+                <div class="setting-label">出題数</div>
+                <div class="radio-group">
+                    <input type="radio" name="count" id="c10" value="10" checked><label for="c10" class="radio-label">10問</label>
+                    <input type="radio" name="count" id="c20" value="20"><label for="c20" class="radio-label">20問</label>
+                    <input type="radio" name="count" id="c-all" value="all"><label for="c-all" class="radio-label">全て</label>
+                </div>
+            </div>
+        </div>
+
+        <div id="category-grid" class="grid">
+            </div>
+    </div>
+
+    <div id="learning-screen" class="screen">
+        <div class="quiz-header">
+            <button class="back-btn" onclick="showMenu()">← メニュー</button>
+        </div>
+        <h1>学習モード</h1>
+        <p style="color:var(--gray)">タップしてチェック ☑ を保存できます</p>
+        <div id="learning-list" class="learning-list">
+            </div>
+    </div>
+
+    <div id="quiz-screen" class="screen">
+        <div class="quiz-header">
+            <button class="back-btn" onclick="quitGame()">× 中断</button>
+            <div class="quiz-stats">
+                Score: <span id="score-val">0</span><br>
+                <span id="progress-val">1/10</span>
+            </div>
+        </div>
+
+        <div class="top-actions">
+            <div id="hint-area">
+                <button class="hint-btn" onclick="handleHint()">💡ヒント</button>
+            </div>
+            
+            <button id="quiz-check-btn" class="quiz-check-btn" onclick="toggleQuizCheck()">✔</button>
+
+            <button id="giveup-btn" class="giveup-btn" onclick="handleGiveUp()">わからない</button>
+        </div>
+
+        <div class="game-area" onclick="focusInput()">
+            <div id="question-text" class="question-text">Question</div>
+            <div id="answer-box" class="answer-box"></div>
+            <div id="message" class="message"></div>
+            <button id="next-btn" class="next-btn" onclick="nextQuestion()">Next Question >></button>
+        </div>
+
+        <input type="text" id="hidden-input" autocomplete="off">
+    </div>
+
+    <div id="result-screen" class="screen">
+        <h1>Finish!</h1>
+        <h2 id="result-cat">Category</h2>
+        <div class="score-display" id="final-score">0 Points</div>
+        <button class="top-menu-btn" onclick="showMenu()">TOP MENU</button>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
